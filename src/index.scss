@@ -1,0 +1,138 @@
+body{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    color: lightblue;
+    background-color: #222222;
+    text-align: center;
+}
+a, a:visited {
+    color: #44AA77;
+}
+.filter-section{
+    margin-bottom: 1em;
+ 
+    header{
+        display: inline;
+    }
+    input {
+        width: 100%;
+        max-width: 40em;
+        border: 1px solid gray;
+        font-size: 1em;
+        border-radius: .25em;
+        padding: .25em;
+    }
+    button {
+        border: none;
+        background: transparent;
+        margin-left: -2em;
+    }
+}
+
+.content-section {
+    section{
+        vertical-align: top;
+        display: inline-block;
+        margin-right: 3em;
+        padding-left: 1em;
+        text-align: left;
+        width: 40%;
+        overflow: hidden;
+
+        header {
+            font-weight: bold;
+        }
+
+        ul{
+            list-style: circle;
+            margin-top: 0;
+            padding-left: 1em;
+            border-left: 1px dotted darkgray;
+        }
+        &>ul{
+            border: none;
+        }
+        li.header, li.header > a {
+            text-decoration: none;
+            color: #FFFFAA;
+        }
+
+        li.header > ul {
+            padding-top: -.75em;
+            opacity: 0;
+            overflow: hidden;
+            height: 0;
+            transition: padding .25s, opacity .25s;
+            &.expanded {
+                height: auto;
+                opacity: 1;
+                padding-top: .1em;
+                overflow: inherit;
+            }
+        }
+
+        li:hover {
+            background-color: rgba(128, 128, 128, 0.15);
+        }
+    }
+}
+
+ul.collapsible {
+    button {
+        border: none;
+        background: transparent;
+    }
+}
+
+#toggle-settings {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: darkgray;
+    background: transparent;
+    border: none;
+}
+
+#settings {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    top: 0;
+    right: -20em;
+    width: 20em;
+    opacity: 0;
+    text-align: left;
+    transition: right .25s, opacity .25s;
+    &.expanded {
+        right: 0;
+        opacity: 1;
+        background-color: rgba(128, 128, 128, 0.8);
+    }
+    .content {
+        color: #44AA77;
+        padding: .5em;
+    }
+    label {
+        color: lightblue;
+    }
+    header {
+        color: black;
+        background-color: #4488FF;
+        padding: 0 .5em;
+    }
+    footer {
+        font-size: .75em;
+        font-style: italic;
+        color: black;
+        padding: 0 .5em;
+    }
+}
+
+body.light {
+    background-color: #FFFFFF;
+    ul {
+        .header {
+            color: darkgoldenrod;
+        }
+    }
+}

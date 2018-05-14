@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Quick Find New Tab</title>
+        <link rel="stylesheet" href="index.min.css" type="text/css" />
+    </head>
+    <body class="dark">
+        <div class="filter-section">
+            <input type="text" id="filter-text" placeholder="Filter Links">
+            <button title="clear filter" id="clear-filter">x</button>
+        </div>
+        <div class="content-section">
+            <section>
+                <header>Top Sites</header>
+                <ul id="top-sites-list"></ul>
+                <header>Recent Pages</header>
+                <ul id="recent-pages-list"></ul>
+            </section>
+            <section>
+                <header>Open Tabs</header>
+                <ul id="open-tabs-list"></ul>
+                <header>Bookmarks</header>
+                <ul id="bookmarks-list"></ul>
+            </section>
+        </div>
+        <div id="settings">
+            <header>Settings</header>
+            <div class="content">
+                <section>
+                    Theme: <label><input type="radio" name="theme">Dark</label> <label><input type="radio" name="theme">Light</label>
+                </section>
+                <section>
+                    <label><input type="checkbox" id="show-top-sites">Top Sites</label><br>
+                    <label><input type="checkbox" id="show-recent-pages">Recent Pages</label><br>
+                    <div><label>Max list size: <input type="number" id="max-recent-pages"></label></div>
+                    <label><input type="checkbox" id="show-bookmarks">Bookmarks</label><br>
+                </section>
+            </div>
+            <footer>
+                Copyright &copy; 2018, JM Gustafson
+            </footer>
+        </div>
+        <button id="toggle-settings">...</button>
+
+        <script src="scripts/require.js" data-main="./app"></script>
+    </body>
+</html>

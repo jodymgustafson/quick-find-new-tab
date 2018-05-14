@@ -1,3 +1,10 @@
+# Ignore generated files
+src/*.js
+src/*.js.map
+
+# This one isn't generated
+!src/background.js
+
 # Logs
 logs
 *.log

@@ -1,0 +1,18 @@
+{
+  "name": "quicktab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "node-sass": "^4.9.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.0.64",
+    "typescript": "^2.8.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JM Gustafson",
+  "license": "ISC"
+}
