@@ -7,7 +7,7 @@ export default function initFilter(onFilter: (filterText: string)=>any): void
     filterEl = <HTMLInputElement>document.getElementById("filter-text");
     if (filterEl)
     {
-        filterEl.addEventListener("keyup", () => applyFilter());
+        filterEl.addEventListener("keyup", (ev) => onKeyUp(ev));
     }
     else
     {
@@ -38,6 +38,20 @@ export default function initFilter(onFilter: (filterText: string)=>any): void
 
 //     applyFilter();
 // }
+
+const KEY_ESCAPE = 27;
+
+function onKeyUp(ev: KeyboardEvent): void
+{
+    if (ev.keyCode === KEY_ESCAPE)
+    {
+        clearFilter();
+    }
+    else
+    {
+        applyFilter();
+    }
+}
 
 function applyFilter(): void
 {

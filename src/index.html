@@ -6,7 +6,7 @@
     <body class="dark">
         <div class="filter-section">
             <input type="text" id="filter-text" placeholder="Filter Links">
-            <button title="clear filter" id="clear-filter">x</button>
+            <button title="Clear filter (Esc)" id="clear-filter">x</button>
         </div>
         <div class="content-section" id="main-view">
             <section class="column">
@@ -37,17 +37,15 @@
                     Theme: <label><input type="radio" name="theme">Dark</label> <label><input type="radio" name="theme">Light</label>
                 </section>
                 <section>
-                    <label><input type="checkbox" id="show-top-sites">Top Sites</label><br>
-                    <label><input type="checkbox" id="show-recent-pages">Recent Pages</label><br>
+                    Recent Pages<br>
                     <div><label>Max list size: <input type="number" id="max-recent-pages"></label></div>
-                    <label><input type="checkbox" id="show-bookmarks">Bookmarks</label><br>
                 </section>
             </div>
             <footer>
                 Copyright &copy; 2018, JM Gustafson
             </footer>
         </div>
-        <button id="toggle-settings">...</button>
+        <button id="toggle-settings">&vellip;</button>
 
         <script src="scripts/require.js" data-main="./app"></script>
     </body>

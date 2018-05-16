@@ -5,6 +5,7 @@ export default function InitAppView(): void
     appEl = <HTMLElement>document.getElementById("main-view");
     if (appEl)
     {
+        // Listen for toggle click events
         appEl.addEventListener("click", ev => onClick(ev));
     }
     else

@@ -100,25 +100,30 @@ ul.collapsible button {
   position: absolute;
   top: 0;
   right: 0;
+  width: 1em;
+  cursor: pointer;
   color: darkgray;
   background: transparent;
   border: none;
+  font-weight: bold;
+  font-size: 1.5em;
 }
 
 #settings {
+  display: none;
   position: absolute;
   display: inline-block;
   overflow: hidden;
-  top: 0;
-  right: -20em;
-  width: 20em;
+  right: 0;
+  top: -9em;
+  height: 9em;
   opacity: 0;
   text-align: left;
-  transition: right .25s, opacity .25s;
+  transition: top .25s, opacity .25s;
 }
 
 #settings.expanded {
-  right: 0;
+  top: 0;
   opacity: 1;
   background-color: rgba(128, 128, 128, 0.8);
 }
