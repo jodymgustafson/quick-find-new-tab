@@ -8,6 +8,7 @@ import initBookmarks, { filterBookmarks } from "./bookmarks";
 import { initTopSites, filterTopSites } from "./topSites";
 import { initOpenTabs, filterOpenTabs } from "./openTabs";
 import initSettings from "./settings";
+import InitAppView from "./appView";
 
 function main(): void
 {
@@ -26,6 +27,8 @@ function main(): void
         initOpenTabs(new TestOpenTabsProvider());
     }
 
+    InitAppView();
+    
     initFilter(filter => applyFilter(filter));
     initSettings();
 }
@@ -37,20 +40,5 @@ function applyFilter(filter: string): void
     filterBookmarks(filter);
     filterOpenTabs(filter);
 }
-
-// function ready(callback: () => any): void
-// {
-//     // If the dom has been loaded it will not fire an event so need to check if loaded and fire the callback immediately
-//     if (document.readyState == "interactive" || document.readyState == "complete")
-//     {
-//         callback();
-//     }
-//     else
-//     {
-//         document.addEventListener("DOMContentLoaded", (evt) => callback());
-//     }
-// }
-
-// ready(() => main());
 
 main();

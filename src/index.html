@@ -8,18 +8,26 @@
             <input type="text" id="filter-text" placeholder="Filter Links">
             <button title="clear filter" id="clear-filter">x</button>
         </div>
-        <div class="content-section">
-            <section>
-                <header>Top Sites</header>
-                <ul id="top-sites-list"></ul>
-                <header>Recent Pages</header>
-                <ul id="recent-pages-list"></ul>
+        <div class="content-section" id="main-view">
+            <section class="column">
+                <section>
+                    <header><a href="toggle://#" class="toggle">Top Sites</a></header>
+                    <ul id="top-sites-list" class="collapsible expanded"></ul>
+                </section>
+                <section>
+                    <header><a href="toggle://#" class="toggle">Recent Pages</a></header>
+                    <ul id="recent-pages-list" class="collapsible expanded"></ul>
+                </section>
             </section>
-            <section>
-                <header>Open Tabs</header>
-                <ul id="open-tabs-list"></ul>
-                <header>Bookmarks</header>
-                <ul id="bookmarks-list"></ul>
+            <section class="column">
+                <section>
+                    <header><a href="toggle://#" class="toggle">Open Tabs</a></header>
+                    <ul id="open-tabs-list" class="collapsible expanded"></ul>
+                </section>
+                <section>
+                    <header><a href="toggle://#" class="toggle">Bookmarks</a></header>
+                    <ul id="bookmarks-list" class="collapsible expanded"></ul>
+                </section>
             </section>
         </div>
         <div id="settings">

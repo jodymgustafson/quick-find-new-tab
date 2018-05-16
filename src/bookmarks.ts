@@ -14,13 +14,14 @@ export default function initBookmarks(bmProvier: IBookmarkProvider): void
             bookmarks = bm;
             createHierarchyList(bm);
         });
+
+        // Listen for clicks to toggle bookmark sections
+        listEl.addEventListener("click", ev => onClick(ev));
     }
     else
     {
         console.error("Couldn't find recent pages list");
     }
-
-    listEl.addEventListener("click", ev => onClick(ev));
 }
 
 export function filterBookmarks(filter: string): void
@@ -112,12 +113,11 @@ function createListElements(nodes: IBookmarkInfo[]): string
         if (bm.children)
         {
             const children = createListElements(bm.children!);
-            html += `<li class='header'><a href="toggle://#">${link}</a><ul>${children}</ul></li>`;
+            html += `<li class='header'><a href="toggle://#" class="toggle">${link}</a><ul>${children}</ul></li>`;
         }
         else
         {
             html += `<li>${link}</li>`;
-            //html += `<li><a href='${r.url}'><img src='chrome://favicon/${r.url}'>${r.title}</a></li>`;
         }
     });
 
@@ -130,6 +130,7 @@ function getBookmarkLink(bm: IBookmarkInfo): string
     if (bm.url)
     {
         return `<a href='${bm.url}'>${title}</a>`;
+        //return `<a href='${bm.url}'><img src='chrome://favicon/${r.url}'>${bm.title}</a>`;
     }
     return title;
 }

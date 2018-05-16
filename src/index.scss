@@ -8,6 +8,10 @@ body{
 a, a:visited {
     color: #44AA77;
 }
+a.toggle {
+    cursor: ns-resize;    
+}
+
 .filter-section{
     margin-bottom: 1em;
  
@@ -30,7 +34,7 @@ a, a:visited {
 }
 
 .content-section {
-    section{
+    section {
         vertical-align: top;
         display: inline-block;
         margin-right: 3em;
@@ -41,12 +45,16 @@ a, a:visited {
 
         header {
             font-weight: bold;
+            >a {
+                text-decoration: none;
+                color: lightblue;
+            }
         }
 
         ul{
             list-style: circle;
             margin-top: 0;
-            padding-left: 1em;
+            padding-left: 1.5em;
             border-left: 1px dotted darkgray;
         }
         &>ul{
@@ -57,7 +65,7 @@ a, a:visited {
             color: #FFFFAA;
         }
 
-        li.header > ul {
+        li.header > ul, ul.collapsible {
             padding-top: -.75em;
             opacity: 0;
             overflow: hidden;

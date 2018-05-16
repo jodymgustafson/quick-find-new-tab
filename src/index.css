@@ -10,6 +10,10 @@ a, a:visited {
   color: #44AA77;
 }
 
+a.toggle {
+  cursor: ns-resize;
+}
+
 .filter-section {
   margin-bottom: 1em;
 }
@@ -47,10 +51,15 @@ a, a:visited {
   font-weight: bold;
 }
 
+.content-section section header > a {
+  text-decoration: none;
+  color: lightblue;
+}
+
 .content-section section ul {
   list-style: circle;
   margin-top: 0;
-  padding-left: 1em;
+  padding-left: 1.5em;
   border-left: 1px dotted darkgray;
 }
 
@@ -63,7 +72,7 @@ a, a:visited {
   color: #FFFFAA;
 }
 
-.content-section section li.header > ul {
+.content-section section li.header > ul, .content-section section ul.collapsible {
   padding-top: -.75em;
   opacity: 0;
   overflow: hidden;
@@ -71,7 +80,7 @@ a, a:visited {
   transition: padding .25s, opacity .25s;
 }
 
-.content-section section li.header > ul.expanded {
+.content-section section li.header > ul.expanded, .content-section section ul.collapsible.expanded {
   height: auto;
   opacity: 1;
   padding-top: .1em;
