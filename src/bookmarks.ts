@@ -113,7 +113,7 @@ function createListElements(nodes: IBookmarkInfo[]): string
         if (bm.children)
         {
             const children = createListElements(bm.children!);
-            html += `<li class='header'><a href="toggle://#" class="toggle">${link}</a><ul>${children}</ul></li>`;
+            html += `<li class='header'><a href="toggle://#" class="toggle header">${link}</a><ul>${children}</ul></li>`;
         }
         else
         {

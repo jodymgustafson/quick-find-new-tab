@@ -12,6 +12,29 @@ a, a:visited {
 
 a.toggle {
   cursor: ns-resize;
+  text-decoration: none;
+  color: lightblue;
+}
+
+a.toggle.header {
+  color: #FFFFAA;
+}
+
+body.theme-light {
+  color: darkblue;
+  background-color: whitesmoke;
+}
+
+body.theme-light a, body.theme-light a:visited {
+  color: #228855;
+}
+
+body.theme-light a.toggle {
+  color: darkblue;
+}
+
+body.theme-light a.toggle.header {
+  color: #660077;
 }
 
 .filter-section {
@@ -25,7 +48,7 @@ a.toggle {
 .filter-section input {
   width: 100%;
   max-width: 40em;
-  border: 1px solid gray;
+  border: 1px solid silver;
   font-size: 1em;
   border-radius: .25em;
   padding: .25em;
@@ -51,11 +74,6 @@ a.toggle {
   font-weight: bold;
 }
 
-.content-section section header > a {
-  text-decoration: none;
-  color: lightblue;
-}
-
 .content-section section ul {
   list-style: circle;
   margin-top: 0;
@@ -65,11 +83,6 @@ a.toggle {
 
 .content-section section > ul {
   border: none;
-}
-
-.content-section section li.header, .content-section section li.header > a {
-  text-decoration: none;
-  color: #FFFFAA;
 }
 
 .content-section section li.header > ul, .content-section section ul.collapsible {
@@ -115,8 +128,8 @@ ul.collapsible button {
   display: inline-block;
   overflow: hidden;
   right: 0;
-  top: -9em;
-  height: 9em;
+  top: -10em;
+  height: 10em;
   opacity: 0;
   text-align: left;
   transition: top .25s, opacity .25s;
@@ -129,12 +142,23 @@ ul.collapsible button {
 }
 
 #settings .content {
-  color: #44AA77;
-  padding: .5em;
+  color: whitesmoke;
+  padding: 1em;
+  padding-right: 2em;
+}
+
+#settings button {
+  border: none;
+  background: lightgreen;
+  color: black;
 }
 
 #settings label {
   color: lightblue;
+}
+
+#settings input[type=number] {
+  width: 4em;
 }
 
 #settings header {
@@ -147,7 +171,7 @@ ul.collapsible button {
   font-size: .75em;
   font-style: italic;
   color: black;
-  padding: 0 .5em;
+  padding: 0 1em;
 }
 
 body.light {

@@ -1,21 +1,27 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class TestRecentPagesProvider {
-        getRecentPages(maxItems, callback) {
+    class BaseRecentPagesProvider {
+        constructor(maxItems) {
+            this.maxItems = maxItems;
+        }
+    }
+    exports.BaseRecentPagesProvider = BaseRecentPagesProvider;
+    class TestRecentPagesProvider extends BaseRecentPagesProvider {
+        getRecentPages(callback) {
             const recents = [];
-            for (let i = 0; i < maxItems; i++) {
+            for (let i = 0; i < this.maxItems; i++) {
                 recents.push({ title: "RecentPage" + i, titleLower: "recentpage" + i, url: "http://recentpage.com#" + i });
             }
             callback(recents);
         }
     }
     exports.TestRecentPagesProvider = TestRecentPagesProvider;
-    class ChromeRecentPagesProvider {
-        getRecentPages(maxItems, callback) {
+    class ChromeRecentPagesProvider extends BaseRecentPagesProvider {
+        getRecentPages(callback) {
             let pages = [];
             if (chrome.history) {
-                chrome.history.search({ text: "", maxResults: maxItems }, results => {
+                chrome.history.search({ text: "", maxResults: this.maxItems }, results => {
                     const recents = results.map(r => this.createRecentPageInfo(r));
                     callback(recents);
                 });

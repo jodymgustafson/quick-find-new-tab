@@ -1,7 +1,5 @@
 import { IRecentPageInfo, IRecentPagesProvider } from "./services/recentPagesProvider";
 
-const MAX_RESULTS = 50;
-
 let listEl: HTMLUListElement;
 let recentPages: IRecentPageInfo[];
 
@@ -10,7 +8,7 @@ export default function initRecentPages(provider: IRecentPagesProvider): void
     listEl = <HTMLUListElement>document.getElementById("recent-pages-list");
     if (listEl)
     {
-        provider.getRecentPages(MAX_RESULTS, (list) => {
+        provider.getRecentPages(list => {
             recentPages = list;
             createList(recentPages);
         });

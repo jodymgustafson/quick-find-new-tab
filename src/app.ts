@@ -7,30 +7,49 @@ import initRecentPages, { filterRecentPages } from "./recentPages";
 import initBookmarks, { filterBookmarks } from "./bookmarks";
 import { initTopSites, filterTopSites } from "./topSites";
 import { initOpenTabs, filterOpenTabs } from "./openTabs";
-import initSettings from "./settings";
-import InitAppView from "./appView";
+import initSettingsView from "./settingsView";
+import initAppView from "./appView";
+import { ChromeAppSettingsService, TestAppSettingsService, IAppSettings } from "./services/appSettingsService";
+
+let isTesting = false;
 
 function main(): void
 {
-    if (window.location.protocol === "chrome-extension:")
+    isTesting = (window.location.protocol !== "chrome-extension:");
+    
+    if (isTesting)
     {
-        initRecentPages(new ChromeRecentPagesProvider());
-        initBookmarks(new ChromeBookmarkProvider());
-        initTopSites(new ChromeTopSitesProvider());
-        initOpenTabs(new ChromeOpenTabsProvider());
-    }
-    else
-    {
-        initRecentPages(new TestRecentPagesProvider());
+        initSettingsView(new TestAppSettingsService(), onAppSettingsChanged);
         initBookmarks(new TestBookmarkProvider());
         initTopSites(new TestTopSitesProvider());
         initOpenTabs(new TestOpenTabsProvider());
     }
+    else
+    {
+        initSettingsView(new ChromeAppSettingsService(), onAppSettingsChanged);
+        initBookmarks(new ChromeBookmarkProvider());
+        initTopSites(new ChromeTopSitesProvider());
+        initOpenTabs(new ChromeOpenTabsProvider());
+    }
 
-    InitAppView();
-    
+    initAppView();
     initFilter(filter => applyFilter(filter));
-    initSettings();
+
+}
+
+function onAppSettingsChanged(appSettings: IAppSettings, field: string): void
+{
+    if (field === "maxRecentPages")
+    {
+        if (isTesting)
+        {
+            initRecentPages(new TestRecentPagesProvider(appSettings.maxRecentPages));
+        }
+        else
+        {
+            initRecentPages(new ChromeRecentPagesProvider(appSettings.maxRecentPages));
+        }
+    }
 }
 
 function applyFilter(filter: string): void

@@ -1,6 +1,6 @@
 let appEl: HTMLElement;
 
-export default function InitAppView(): void
+export default function initAppView(): void
 {
     appEl = <HTMLElement>document.getElementById("main-view");
     if (appEl)

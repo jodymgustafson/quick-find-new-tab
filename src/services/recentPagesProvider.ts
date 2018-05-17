@@ -7,15 +7,24 @@ export interface IRecentPageInfo
 
 export interface IRecentPagesProvider
 {
-    getRecentPages(maxItems: number, calback: (recentPages: IRecentPageInfo[]) => any): void;
+    getRecentPages(calback: (recentPages: IRecentPageInfo[]) => any): void;
 }
 
-export class TestRecentPagesProvider implements IRecentPagesProvider
+export abstract class BaseRecentPagesProvider implements IRecentPagesProvider
 {
-    public getRecentPages(maxItems: number, callback: (recentPages: IRecentPageInfo[]) => any): void
+    constructor(public maxItems: number)
+    {
+    }
+    
+    abstract getRecentPages(calback: (recentPages: IRecentPageInfo[]) => any): void;
+}
+
+export class TestRecentPagesProvider extends BaseRecentPagesProvider
+{
+    public getRecentPages(callback: (recentPages: IRecentPageInfo[]) => any): void
     {
         const recents: IRecentPageInfo[] = [];
-        for (let i = 0; i < maxItems; i++)
+        for (let i = 0; i < this.maxItems; i++)
         {
             recents.push({ title: "RecentPage" + i, titleLower: "recentpage" + i, url: "http://recentpage.com#" + i});
         }
@@ -24,14 +33,14 @@ export class TestRecentPagesProvider implements IRecentPagesProvider
     }
 }
 
-export class ChromeRecentPagesProvider implements IRecentPagesProvider
+export class ChromeRecentPagesProvider extends BaseRecentPagesProvider
 {
-    public getRecentPages(maxItems: number, callback: (recentPages: IRecentPageInfo[]) => any): void
+    public getRecentPages(callback: (recentPages: IRecentPageInfo[]) => any): void
     {
         let pages: IRecentPageInfo[] = [];
         if (chrome.history)
         {
-            chrome.history.search({ text: "", maxResults: maxItems}, results => {
+            chrome.history.search({ text: "", maxResults: this.maxItems}, results => {
                 const recents = results.map(r => this.createRecentPageInfo(r));
                 callback(recents);
             });
