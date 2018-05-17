@@ -12,7 +12,7 @@ export interface IRecentPagesProvider
 
 export abstract class BaseRecentPagesProvider implements IRecentPagesProvider
 {
-    constructor(public maxItems: number)
+    constructor(public maxItems: number, public maxHours: number)
     {
     }
     
@@ -40,7 +40,9 @@ export class ChromeRecentPagesProvider extends BaseRecentPagesProvider
         let pages: IRecentPageInfo[] = [];
         if (chrome.history)
         {
-            chrome.history.search({ text: "", maxResults: this.maxItems}, results => {
+            let start = new Date().getTime() - (this.maxHours * 60 * 60 * 1000);
+            console.log("start date: " + new Date(start));
+            chrome.history.search({ text: "", maxResults: this.maxItems, startTime: start}, results => {
                 const recents = results.map(r => this.createRecentPageInfo(r));
                 callback(recents);
             });

@@ -2,7 +2,7 @@ import { IAppSettings, IAppSettingsService } from "./services/appSettingsService
 
 let service: IAppSettingsService;
 let appSettings: IAppSettings;
-let appSettingsChanged: (appSettings: IAppSettings, field: string) => any;
+let appSettingsChanged: (appSettings: IAppSettings, fields: string) => any;
 
 export default function initSettingsView(settingsSvc: IAppSettingsService, onChanged: (appSettings: IAppSettings, field: string) => any): void
 {
@@ -31,25 +31,35 @@ function initInputs(): void
     });
     fireAppSettingsChanged("theme");
 
-    const maxRecentsEl = <HTMLInputElement>document.getElementById("max-recent-pages");
+    let maxRecentsEl = <HTMLInputElement>document.getElementById("max-recent-pages");
     if (maxRecentsEl)
     {
         maxRecentsEl.value = appSettings.maxRecentPages.toString();
         maxRecentsEl.addEventListener("change", ev => onMaxRecentsChange(ev));
-        fireAppSettingsChanged("maxRecentPages");
     }
+
+    maxRecentsEl = <HTMLInputElement>document.getElementById("max-recent-hours");
+    if (maxRecentsEl)
+    {
+        maxRecentsEl.value = appSettings.maxRecentHours.toString();
+        maxRecentsEl.addEventListener("change", ev => onMaxRecentsChange(ev));
+    }
+
+    // This will cause the recent pages service to get initialized
+    fireAppSettingsChanged("maxRecentPages,maxRecentHours");
 }
 
 function onMaxRecentsChange(ev: Event): void
 {
-    const maxRecentsEl = <HTMLInputElement>document.getElementById("max-recent-pages");
+    const maxRecentsEl = <HTMLInputElement>ev.srcElement;
     if (maxRecentsEl)
     {
         const val = maxRecentsEl.value;
         if (val)
         {
-            appSettings.maxRecentPages = parseInt(val);
-            fireAppSettingsChanged("maxRecentPages");
+            const field = maxRecentsEl.name;
+            (<any>appSettings)[field] = parseInt(val);
+            fireAppSettingsChanged(maxRecentsEl.name);
         }
     }
 }

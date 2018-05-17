@@ -1,8 +1,11 @@
+const VERSION = "0.2";
+
 export interface IAppSettings
 {
     version: string;
     theme: string;
     maxRecentPages: number;
+    maxRecentHours: number;
 }
 
 export interface IAppSettingsService
@@ -11,7 +14,32 @@ export interface IAppSettingsService
     saveAppSettings(settings: IAppSettings): void;
 }
 
-export class TestAppSettingsService implements IAppSettingsService
+abstract class BaseAppSettingsService implements IAppSettingsService
+{
+    abstract getAppSettings(callback: (settings: IAppSettings) => any): void;
+    abstract saveAppSettings(settings: IAppSettings): void;
+
+    protected upgradeSettings(settings: any): IAppSettings
+    {
+        if (settings.version !== VERSION)
+        {
+            const dflt: any = getDefaultSettings();
+            for (let i in dflt)
+            {
+                if (!settings[i])
+                {
+                    //console.log("Adding setting: " + i);
+                    settings[i] = dflt[i];
+                }
+            }
+            this.saveAppSettings(settings);
+        }
+    
+        return settings;
+    }
+}
+
+export class TestAppSettingsService extends BaseAppSettingsService
 {
     public getAppSettings(callback: (settings: IAppSettings) => any): void
     {
@@ -19,7 +47,7 @@ export class TestAppSettingsService implements IAppSettingsService
         let json = localStorage.getItem("appSettings");
         if (json)
         {
-            appSettings = JSON.parse(json);
+            appSettings = this.upgradeSettings(JSON.parse(json));
         }
         else
         {
@@ -38,7 +66,7 @@ export class TestAppSettingsService implements IAppSettingsService
     }
 }
 
-export class ChromeAppSettingsService implements IAppSettingsService
+export class ChromeAppSettingsService extends BaseAppSettingsService
 {
     public getAppSettings(callback: (settings: IAppSettings) => any): void
     {
@@ -46,7 +74,7 @@ export class ChromeAppSettingsService implements IAppSettingsService
             let settings: IAppSettings;
             if (items.appSettings)
             {
-                settings = items.appSettings;
+                settings = this.upgradeSettings(items.appSettings);
             }
             else
             {
@@ -66,12 +94,12 @@ export class ChromeAppSettingsService implements IAppSettingsService
     }
 }
 
-
 function getDefaultSettings(): IAppSettings
 {
     return {
-        version: "0.1",
+        version: VERSION,
         theme: "theme-dark",
-        maxRecentPages: 100
+        maxRecentPages: 100,
+        maxRecentHours: 24
     };
 }

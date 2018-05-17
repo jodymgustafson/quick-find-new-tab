@@ -37,17 +37,17 @@ function main(): void
 
 }
 
-function onAppSettingsChanged(appSettings: IAppSettings, field: string): void
+function onAppSettingsChanged(appSettings: IAppSettings, fields: string): void
 {
-    if (field === "maxRecentPages")
+    if (fields.indexOf("maxRecentPages") >= 0 || fields.indexOf("maxRecentHours") >= 0)
     {
         if (isTesting)
         {
-            initRecentPages(new TestRecentPagesProvider(appSettings.maxRecentPages));
+            initRecentPages(new TestRecentPagesProvider(appSettings.maxRecentPages, appSettings.maxRecentHours));
         }
         else
         {
-            initRecentPages(new ChromeRecentPagesProvider(appSettings.maxRecentPages));
+            initRecentPages(new ChromeRecentPagesProvider(appSettings.maxRecentPages, appSettings.maxRecentHours));
         }
     }
 }

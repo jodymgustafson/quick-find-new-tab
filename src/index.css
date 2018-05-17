@@ -1,6 +1,5 @@
 body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-size: 16px;
   color: lightblue;
   background-color: #222222;
   text-align: center;
@@ -128,8 +127,8 @@ ul.collapsible button {
   display: inline-block;
   overflow: hidden;
   right: 0;
-  top: -10em;
-  height: 10em;
+  top: -12em;
+  height: 12em;
   opacity: 0;
   text-align: left;
   transition: opacity .5s, top .25s;
@@ -143,14 +142,15 @@ ul.collapsible button {
 
 #settings .content {
   color: whitesmoke;
-  padding: 1em;
-  padding-right: 2em;
+  padding: .5em 1em;
+  margin-right: 2em;
 }
 
 #settings button {
   border: none;
   background: lightgreen;
   color: black;
+  margin-top: .5em;
 }
 
 #settings label {
@@ -172,4 +172,5 @@ ul.collapsible button {
   font-style: italic;
   color: black;
   padding: 0 1em;
+  text-align: center;
 }
