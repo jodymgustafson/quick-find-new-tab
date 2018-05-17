@@ -1,11 +1,9 @@
 {
-  "name": "quicktab",
+  "name": "quickfindnewtab",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "node-sass": "^4.9.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/chrome": "0.0.64",
     "typescript": "^2.8.3"
