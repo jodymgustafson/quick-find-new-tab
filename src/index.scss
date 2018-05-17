@@ -18,16 +18,16 @@ a.toggle {
 }
 
 body.theme-light {
-    color: darkblue;
+    color: green;
     background-color: whitesmoke;
 
     a, a:visited {
-        color: #228855;
+        color: blue;
     }
     a.toggle {
-        color: darkblue;
+        color: black;
         &.header {
-            color: #660077;
+            color: darkcyan;
         }
     }
 }
@@ -127,11 +127,11 @@ ul.collapsible {
     height: 10em;
     opacity: 0;
     text-align: left;
-    transition: top .25s, opacity .25s;
+    transition: opacity .5s, top .25s;
     &.expanded {
         top: 0;
-        opacity: 1;
-        background-color: rgba(128, 128, 128, 0.8);
+        opacity: .9;
+        background-color: rgb(128, 128, 128);
     }
     .content {
         color: whitesmoke;
@@ -159,14 +159,5 @@ ul.collapsible {
         font-style: italic;
         color: black;
         padding: 0 1em;
-    }
-}
-
-body.light {
-    background-color: #FFFFFF;
-    ul {
-        .header {
-            color: darkgoldenrod;
-        }
     }
 }
