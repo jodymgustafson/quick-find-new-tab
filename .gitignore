@@ -4,6 +4,7 @@ src/**/*.js.map
 
 # This one isn't generated
 !src/background.js
+!src/scripts/require.js
 
 # Logs
 logs
