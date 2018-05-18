@@ -1,4 +1,4 @@
-import initFilter from "./filter";
+import initFilter, { applyFilter } from "./filter";
 import { TestBookmarkProvider, ChromeBookmarkProvider } from "./services/bookmarkProvider";
 import { TestRecentPagesProvider, ChromeRecentPagesProvider } from "./services/recentPagesProvider";
 import { ChromeTopSitesProvider, TestTopSitesProvider } from "./services/topSitesProvider";
@@ -33,11 +33,11 @@ function main(): void
     }
 
     initAppView();
-    initFilter(filter => applyFilter(filter));
+    initFilter(filter => onFilterChanged(filter));
 
 }
 
-function onAppSettingsChanged(appSettings: IAppSettings, fields: string): void
+function onAppSettingsChanged(appSettings: IAppSettings, ...fields: string[]): void
 {
     if (fields.indexOf("maxRecentPages") >= 0 || fields.indexOf("maxRecentHours") >= 0)
     {
@@ -50,9 +50,19 @@ function onAppSettingsChanged(appSettings: IAppSettings, fields: string): void
             initRecentPages(new ChromeRecentPagesProvider(appSettings.maxRecentPages, appSettings.maxRecentHours));
         }
     }
+    if (fields.indexOf("theme") >= 0)
+    {
+        applyTheme(appSettings.theme);
+    }
 }
 
-function applyFilter(filter: string): void
+function applyTheme(theme: string): void
+{
+    document.body.classList.remove("theme-dark", "theme-light");
+    document.body.classList.add(theme);
+}
+
+function onFilterChanged(filter: string): void
 {
     filterTopSites(filter);
     filterRecentPages(filter);

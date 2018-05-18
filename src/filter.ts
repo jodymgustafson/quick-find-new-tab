@@ -53,10 +53,13 @@ function onKeyUp(ev: KeyboardEvent): void
     }
 }
 
-function applyFilter(): void
+export function applyFilter(): void
 {
-    const text = filterEl.value;
-    filterCallback(text);
+    if (filterEl)
+    {
+        const text = filterEl.value;
+        filterCallback(text);
+    }
 }
 
 function clearFilter(): void

@@ -41,7 +41,7 @@ export class ChromeRecentPagesProvider extends BaseRecentPagesProvider
         if (chrome.history)
         {
             let start = new Date().getTime() - (this.maxHours * 60 * 60 * 1000);
-            console.log("start date: " + new Date(start));
+            //console.log("start date: " + new Date(start));
             chrome.history.search({ text: "", maxResults: this.maxItems, startTime: start}, results => {
                 const recents = results.map(r => this.createRecentPageInfo(r));
                 callback(recents);

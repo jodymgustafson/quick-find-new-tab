@@ -1,5 +1,6 @@
 body{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 100%;
     color: lightblue;
     background-color: #222222;
     text-align: center;
@@ -17,7 +18,7 @@ a.toggle {
 }
 
 body.theme-light {
-    color: green;
+    color: black;
     background-color: whitesmoke;
 
     a, a:visited {
@@ -141,7 +142,7 @@ ul.collapsible {
         border: none;
         background: lightgreen;
         color: black;
-        margin-top: .5em;
+        margin: .5em auto;
     }
     label {
         color: lightblue;

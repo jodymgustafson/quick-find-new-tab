@@ -2,16 +2,15 @@ import { IAppSettings, IAppSettingsService } from "./services/appSettingsService
 
 let service: IAppSettingsService;
 let appSettings: IAppSettings;
-let appSettingsChanged: (appSettings: IAppSettings, fields: string) => any;
+let appSettingsChanged: (appSettings: IAppSettings, ...fields: string[]) => any;
 
-export default function initSettingsView(settingsSvc: IAppSettingsService, onChanged: (appSettings: IAppSettings, field: string) => any): void
+export default function initSettingsView(settingsSvc: IAppSettingsService, onChanged: (appSettings: IAppSettings, ...field: string[]) => any): void
 {
     service = settingsSvc;
     appSettingsChanged = onChanged;
 
     settingsSvc.getAppSettings(settings => {
         appSettings = settings;
-        applyTheme();
         initInputs();
     });
 
@@ -26,27 +25,30 @@ function initInputs(): void
 {
     const themeRBs = document.getElementsByName("theme");
     themeRBs.forEach(rb => {
-        rb.addEventListener("change", ev => onThemeChange(ev));
-        (<HTMLInputElement>rb).checked = (rb.id === appSettings.theme);
+        initThemeRadio(<HTMLInputElement>rb, appSettings.theme);
     });
-    fireAppSettingsChanged("theme");
 
-    let maxRecentsEl = <HTMLInputElement>document.getElementById("max-recent-pages");
+    initRecentPagesInput("max-recent-pages", appSettings.maxRecentPages.toString());
+    initRecentPagesInput("max-recent-hours", appSettings.maxRecentHours.toString());
+
+    // This will cause the settings to be applied
+    fireAppSettingsChanged("theme", "maxRecentPages", "maxRecentHours");
+}
+
+function initThemeRadio(rb: HTMLInputElement, theme: string): void
+{
+    rb.addEventListener("change", ev => onThemeChange(ev));
+    (<HTMLInputElement>rb).checked = (rb.id === theme);
+}
+
+function initRecentPagesInput(id: string, value: string): void
+{
+    let maxRecentsEl = <HTMLInputElement>document.getElementById(id);
     if (maxRecentsEl)
     {
-        maxRecentsEl.value = appSettings.maxRecentPages.toString();
+        maxRecentsEl.value = value;
         maxRecentsEl.addEventListener("change", ev => onMaxRecentsChange(ev));
     }
-
-    maxRecentsEl = <HTMLInputElement>document.getElementById("max-recent-hours");
-    if (maxRecentsEl)
-    {
-        maxRecentsEl.value = appSettings.maxRecentHours.toString();
-        maxRecentsEl.addEventListener("change", ev => onMaxRecentsChange(ev));
-    }
-
-    // This will cause the recent pages service to get initialized
-    fireAppSettingsChanged("maxRecentPages,maxRecentHours");
 }
 
 function onMaxRecentsChange(ev: Event): void
@@ -71,20 +73,13 @@ function onThemeChange(ev: Event): void
         // id of the rb is the theme 
         appSettings.theme = ev.srcElement.id;
         fireAppSettingsChanged("theme");
-        applyTheme();
     }
 }
 
-function applyTheme(): void
-{
-    document.body.classList.remove("theme-dark", "theme-light");
-    document.body.classList.add(appSettings.theme);
-}
-
-function fireAppSettingsChanged(field: string): void
+function fireAppSettingsChanged(...fields: string[]): void
 {
     service.saveAppSettings(appSettings);
-    appSettingsChanged(appSettings, field);
+    appSettingsChanged(appSettings, ...fields);
 }
 
 function toggleSettings(): void
