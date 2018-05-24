@@ -1,13 +1,13 @@
-let filterEl: HTMLInputElement;
+let filterInput: HTMLInputElement;
 let filterCallback: (filterText: string)=>any;
 
 export default function initFilter(onFilter: (filterText: string)=>any): void
 {
     filterCallback = onFilter;
-    filterEl = <HTMLInputElement>document.getElementById("filter-text");
-    if (filterEl)
+    filterInput = <HTMLInputElement>document.getElementById("filter-text");
+    if (filterInput)
     {
-        filterEl.addEventListener("keyup", (ev) => onKeyUp(ev));
+        filterInput.addEventListener("keyup", (ev) => onKeyUp(ev));
     }
     else
     {
@@ -55,15 +55,16 @@ function onKeyUp(ev: KeyboardEvent): void
 
 export function applyFilter(): void
 {
-    if (filterEl)
+    if (filterInput)
     {
-        const text = filterEl.value;
+        const text = filterInput.value;
         filterCallback(text);
     }
 }
 
 function clearFilter(): void
 {
-    filterEl.value = "";
+    filterInput.value = "";
+    filterInput.focus();
     applyFilter();
 }
