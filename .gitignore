@@ -1,6 +1,8 @@
 # Ignore generated files
 src/**/*.js
 src/**/*.js.map
+dist/**/*
+quick-find-new-tab.zip
 
 # This one isn't generated
 !src/background.js
