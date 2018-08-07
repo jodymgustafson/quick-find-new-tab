@@ -1,16 +1,20 @@
-let appEl: HTMLElement;
-
 export default function initAppView(): void
 {
-    appEl = <HTMLElement>document.getElementById("main-view");
+    const appEl = <HTMLElement>document.getElementById("main-view");
     if (appEl)
     {
         // Listen for toggle click events
-        appEl.addEventListener("click", ev => onClick(ev));
+        appEl.addEventListener("click", onClick);
     }
     else
     {
         console.error("Couldn't find main view");
+    }
+
+    const bOpts = document.getElementById("show-options");
+    if (bOpts)
+    {
+        bOpts.addEventListener("click", showOptions);
     }
 }
 
@@ -27,5 +31,17 @@ function onClick(ev: MouseEvent): void
             ev.preventDefault();
             ev.stopPropagation();
         }
+    }
+}
+
+function showOptions(): void
+{
+    if (chrome.runtime.openOptionsPage) 
+    {
+        chrome.runtime.openOptionsPage();
+    }
+    else
+    {
+        window.open(chrome.runtime.getURL('options.html'));
     }
 }

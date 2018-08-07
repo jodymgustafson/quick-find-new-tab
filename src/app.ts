@@ -7,53 +7,42 @@ import initRecentPages, { filterRecentPages } from "./recentPages";
 import initBookmarks, { filterBookmarks } from "./bookmarks";
 import { initTopSites, filterTopSites } from "./topSites";
 import { initOpenTabs, filterOpenTabs } from "./openTabs";
-import initSettingsView from "./settingsView";
 import initAppView from "./appView";
 import { ChromeAppSettingsService, TestAppSettingsService, IAppSettings } from "./services/appSettingsService";
 
-let isTesting = false;
+const isTesting = (window.location.protocol !== "chrome-extension:");
 
 function main(): void
 {
-    isTesting = (window.location.protocol !== "chrome-extension:");
-    
+    const settingsSvc = (isTesting ? new TestAppSettingsService() : new ChromeAppSettingsService());
+
+    settingsSvc.getAppSettings(settings => {
+        initViews(settings);
+    });
+}
+
+function initViews(appSettings: IAppSettings): void
+{
+    applyTheme(appSettings.theme);
+
     if (isTesting)
     {
-        initSettingsView(new TestAppSettingsService(), onAppSettingsChanged);
         initBookmarks(new TestBookmarkProvider());
         initTopSites(new TestTopSitesProvider());
         initOpenTabs(new TestOpenTabsProvider());
+        initRecentPages(new TestRecentPagesProvider(appSettings.maxRecentPages, appSettings.maxRecentHours));
     }
     else
     {
-        initSettingsView(new ChromeAppSettingsService(), onAppSettingsChanged);
         initBookmarks(new ChromeBookmarkProvider());
         initTopSites(new ChromeTopSitesProvider());
         initOpenTabs(new ChromeOpenTabsProvider());
+        initRecentPages(new ChromeRecentPagesProvider(appSettings.maxRecentPages, appSettings.maxRecentHours));
     }
 
     initAppView();
     initFilter(filter => onFilterChanged(filter));
 
-}
-
-function onAppSettingsChanged(appSettings: IAppSettings, ...fields: string[]): void
-{
-    if (fields.indexOf("maxRecentPages") >= 0 || fields.indexOf("maxRecentHours") >= 0)
-    {
-        if (isTesting)
-        {
-            initRecentPages(new TestRecentPagesProvider(appSettings.maxRecentPages, appSettings.maxRecentHours));
-        }
-        else
-        {
-            initRecentPages(new ChromeRecentPagesProvider(appSettings.maxRecentPages, appSettings.maxRecentHours));
-        }
-    }
-    if (fields.indexOf("theme") >= 0)
-    {
-        applyTheme(appSettings.theme);
-    }
 }
 
 function applyTheme(theme: string): void
