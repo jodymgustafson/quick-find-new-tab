@@ -1,29 +1,16 @@
-import { IAppSettings, IAppSettingsService } from "./services/appSettingsService";
+import { IAppSettings, IAppSettingsService, ChromeAppSettingsService, TestAppSettingsService } from "./services/appSettingsService";
 
 let service: IAppSettingsService;
 let appSettings: IAppSettings;
-let appSettingsChanged: (appSettings: IAppSettings, ...fields: string[]) => any;
 
-export default function initSettingsView(settingsSvc: IAppSettingsService, onChanged: (appSettings: IAppSettings, ...field: string[]) => any): void
+function initSettingsView(settingsSvc: IAppSettingsService): void
 {
     service = settingsSvc;
-    appSettingsChanged = onChanged;
 
     settingsSvc.getAppSettings(settings => {
         appSettings = settings;
         initInputs();
     });
-
-    const btn = document.getElementById("toggle-settings");
-    if (btn)
-    {
-        btn.addEventListener("click", () => toggleSettings());
-    }
-    const bOpts = document.getElementById("show-options");
-    if (bOpts)
-    {
-        bOpts.addEventListener("click", () => showOptions());
-    }
 }
 
 function initInputs(): void
@@ -37,7 +24,7 @@ function initInputs(): void
     initRecentPagesInput("max-recent-hours", appSettings.maxRecentHours.toString());
 
     // This will cause the settings to be applied
-    fireAppSettingsChanged("theme", "maxRecentPages", "maxRecentHours");
+    saveAppSettings();
 }
 
 function initThemeRadio(rb: HTMLInputElement, theme: string): void
@@ -66,7 +53,7 @@ function onMaxRecentsChange(ev: Event): void
         {
             const field = maxRecentsEl.name;
             (<any>appSettings)[field] = parseInt(val);
-            fireAppSettingsChanged(maxRecentsEl.name);
+            saveAppSettings();
         }
     }
 }
@@ -77,14 +64,13 @@ function onThemeChange(ev: Event): void
     {
         // id of the rb is the theme 
         appSettings.theme = ev.srcElement.id;
-        fireAppSettingsChanged("theme");
+        saveAppSettings();
     }
 }
 
-function fireAppSettingsChanged(...fields: string[]): void
+function saveAppSettings(): void
 {
     service.saveAppSettings(appSettings);
-    appSettingsChanged(appSettings, ...fields);
 }
 
 function toggleSettings(): void
@@ -96,14 +82,17 @@ function toggleSettings(): void
     }
 }
 
-function showOptions(): void
+function main(): void
 {
-    if (chrome.runtime.openOptionsPage) 
+    const isTesting = (window.location.protocol !== "chrome-extension:");
+    if (isTesting)
     {
-        chrome.runtime.openOptionsPage();
+        initSettingsView(new TestAppSettingsService());
     }
     else
     {
-        window.open(chrome.runtime.getURL('options.html'));
+        initSettingsView(new ChromeAppSettingsService());
     }
 }
+
+main();

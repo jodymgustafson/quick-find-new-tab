@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quick Find New Tab Options</title>
+        <link rel="stylesheet" href="options.min.css" type="text/css" />
+        <link rel="icon" href="images/icon_16.png">
+    </head>
+    <body>
+        <h1>Quick Find New Tab Options</h1>
+        <div class="content">
+            <section>
+                Theme:
+                <label><input type="radio" name="theme" id="theme-dark">Dark</label>
+                <label><input type="radio" name="theme" id="theme-light">Light</label>
+            </section>
+            <section class="recent-pages">
+                Recent Pages:<br>
+                <div>
+                    <label>Max items: <input type="number" id="max-recent-pages" name="maxRecentPages"></label><br>
+                    <label>Max hours: <input type="number" id="max-recent-hours" name="maxRecentHours"></label>
+                </div>
+            </section>
+            <section class="actions">
+                <button>&checkmark; Apply Changes</button>
+            </section>
+        </div>
+        <footer>
+            Copyright &copy; 2018, JM Gustafson<br>
+            <a href="https://worldtreesoftware.com">WorldTree Software</a>
+        </footer>
+    
+        <script src="scripts/require.js" data-main="./options"></script>
+    </body>
+</html>

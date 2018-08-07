@@ -106,17 +106,20 @@ ul.collapsible {
     }
 }
 
-#toggle-settings {
+#toggle-settings, #show-options {
     position: absolute;
     top: 0;
     right: 0;
-    width: 1em;
+    width: 1.5em;
     cursor: pointer;
     color: darkgray;
     background: transparent;
     border: none;
     font-weight: bold;
     font-size: 1.5em;
+}
+#toggle-settings{
+    display: none;
 }
 
 #settings {
